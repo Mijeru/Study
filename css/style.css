@@ -1,0 +1,504 @@
+/* ================================================================
+   style.css — Thème sombre pour Révision Facile
+   Emplacement : css/style.css
+================================================================ */
+
+/* ----------------------------------------------------------------
+   VARIABLES GLOBALES
+   Modifie ces valeurs pour changer les couleurs de tout le site.
+---------------------------------------------------------------- */
+:root {
+  --bleu         : #5b9cf6;   /* Couleur principale */
+  --bleu-hover   : #4a8ae8;
+  --rouge        : #f87171;   /* Supprimer */
+  --vert         : #4ade80;   /* Succès */
+  --texte        : #e2e8f0;   /* Texte principal */
+  --texte-leger  : #94a3b8;   /* Texte secondaire */
+  --fond-page    : #0f172a;   /* Fond de la page */
+  --fond-carte   : #1e293b;   /* Fond des cartes */
+  --fond-input   : #1e293b;   /* Fond des champs */
+  --bordure      : #334155;   /* Bordures */
+  --rayon        : 8px;
+}
+
+/* Reset basique */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+
+/* ----------------------------------------------------------------
+   BODY
+---------------------------------------------------------------- */
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  color: var(--texte);
+  background: var(--fond-page);
+  line-height: 1.6;
+}
+
+
+/* ----------------------------------------------------------------
+   HEADER — nav.php
+---------------------------------------------------------------- */
+header {
+  background: var(--fond-carte);
+  border-bottom: 1px solid var(--bordure);
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header h1 {
+  font-size: 17px;
+  color: var(--bleu);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+header nav {
+  display: flex;
+  gap: 2px;
+}
+
+header nav a {
+  text-decoration: none;
+  color: var(--texte-leger);
+  padding: 7px 14px;
+  border-radius: var(--rayon);
+  font-size: 13px;
+  transition: background 0.15s, color 0.15s;
+}
+
+header nav a:hover {
+  background: #2d3f56;
+  color: var(--texte);
+}
+
+/* Nom + bouton déco à droite */
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--texte-leger);
+}
+
+.btn-deconnexion {
+  text-decoration: none;
+  padding: 5px 13px;
+  border-radius: var(--rayon);
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--rouge);
+  font-size: 13px;
+  transition: opacity 0.2s;
+}
+
+.btn-deconnexion:hover { opacity: 0.75; }
+
+
+/* ----------------------------------------------------------------
+   CONTENU PRINCIPAL
+---------------------------------------------------------------- */
+main {
+  max-width: 860px;
+  margin: 30px auto;
+  padding: 0 22px;
+}
+
+
+/* ----------------------------------------------------------------
+   TITRES
+---------------------------------------------------------------- */
+main h2 {
+  font-size: 18px;
+  color: var(--texte);
+  margin-top: 32px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--bleu);
+}
+
+main h2:first-child { margin-top: 0; }
+
+.card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--texte);
+  margin-bottom: 7px;
+}
+
+
+/* ----------------------------------------------------------------
+   FORMULAIRES
+---------------------------------------------------------------- */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  margin: 7px 0;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--fond-input);
+  color: var(--texte);
+  transition: border-color 0.15s;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+select { cursor: pointer; }
+select option { background: #1e293b; }
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--bleu);
+}
+
+button[type="submit"],
+button.btn-ajouter {
+  display: inline-block;
+  padding: 9px 20px;
+  margin-top: 6px;
+  background: var(--bleu);
+  color: #0f172a;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--rayon);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+button[type="submit"]:hover,
+button.btn-ajouter:hover {
+  background: var(--bleu-hover);
+}
+
+
+/* ----------------------------------------------------------------
+   CARTES
+---------------------------------------------------------------- */
+.card {
+  background: var(--fond-carte);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 16px 18px;
+  margin-top: 12px;
+}
+
+.card p {
+  font-size: 13px;
+  color: var(--texte-leger);
+  margin-bottom: 4px;
+}
+
+.card p strong { color: var(--texte); }
+
+
+/* ----------------------------------------------------------------
+   LIENS D'ACTION DANS LES CARTES
+---------------------------------------------------------------- */
+.card a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 4px 12px;
+  border-radius: var(--rayon);
+  font-size: 12px;
+  margin-top: 9px;
+  margin-right: 5px;
+  transition: opacity 0.15s;
+}
+
+.card a:hover { opacity: 0.7; }
+
+.card a[href*="modifier"] {
+  background: rgba(91, 156, 246, 0.15);
+  color: var(--bleu);
+}
+
+.card a[href*="delete"] {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--rouge);
+}
+
+.card a[href*="favori"] {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+}
+
+main > form + a,
+form a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 8px 16px;
+  margin-top: 6px;
+  margin-left: 8px;
+  background: #2d3f56;
+  color: var(--texte-leger);
+  border-radius: var(--rayon);
+  font-size: 14px;
+  transition: opacity 0.15s;
+}
+
+form a:hover { opacity: 0.75; }
+
+
+/* ----------------------------------------------------------------
+   ACCUEIL — COMPTEURS RAPIDES — index.php
+   Trois cases côte à côte qui affichent le nombre de fiches, cours...
+---------------------------------------------------------------- */
+.accueil-compteurs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;     /* Sur petit écran, les cases passent à la ligne */
+  margin: 20px 0;
+}
+
+.compteur-card {
+  background: var(--fond-carte);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 20px 16px;
+  flex: 1;             /* Chaque case prend le même espace disponible */
+  min-width: 120px;
+  text-align: center;
+}
+
+.compteur-nombre {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--bleu);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.compteur-label {
+  font-size: 13px;
+  color: var(--texte-leger);
+}
+
+/* Le lien dans le compteur hérite du style parent */
+.compteur-label a {
+  text-decoration: none;
+  color: var(--texte-leger);
+}
+
+.compteur-label a:hover {
+  color: var(--bleu);
+}
+
+
+/* ----------------------------------------------------------------
+   GRILLE EMPLOI DU TEMPS — emploi_du_temps.php
+---------------------------------------------------------------- */
+.grille-wrapper {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+.grille {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+
+.grille th {
+  background: #253044;
+  color: var(--texte-leger);
+  padding: 9px 10px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid var(--bordure);
+}
+
+.grille td {
+  border: 1px solid var(--bordure);
+  padding: 6px 8px;
+  vertical-align: top;
+  min-width: 90px;
+  min-height: 40px;
+}
+
+.heure-col {
+  color: var(--texte-leger);
+  text-align: right;
+  font-weight: 600;
+  width: 50px;
+  background: #162032;
+  padding-right: 10px;
+}
+
+.fiche-resume {
+  background: rgba(91, 156, 246, 0.15);
+  border-left: 3px solid var(--bleu);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: var(--texte);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fiche-resume:hover { background: rgba(91, 156, 246, 0.25); }
+
+
+/* ----------------------------------------------------------------
+   POPUP — emploi_du_temps.php
+---------------------------------------------------------------- */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-overlay.actif { display: flex; }
+
+.popup-boite {
+  background: var(--fond-carte);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 24px 28px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.popup-boite h3 {
+  font-size: 17px;
+  color: var(--bleu);
+  margin-bottom: 12px;
+}
+
+.popup-boite p {
+  font-size: 14px;
+  color: var(--texte-leger);
+  margin: 5px 0;
+}
+
+.popup-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.popup-actions a,
+.popup-actions button {
+  padding: 7px 15px;
+  border-radius: var(--rayon);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+
+.popup-actions a:hover,
+.popup-actions button:hover { opacity: 0.8; }
+
+.btn-modifier  { background: var(--bleu); color: #0f172a; font-weight: 600; }
+.btn-supprimer { background: var(--rouge); color: #0f172a; font-weight: 600; }
+.btn-fermer    { background: #2d3f56; color: var(--texte); }
+
+
+/* ----------------------------------------------------------------
+   CONNEXION / INSCRIPTION
+---------------------------------------------------------------- */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--fond-page);
+  padding: 20px;
+}
+
+.auth-boite {
+  background: var(--fond-carte);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 34px 38px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-titre {
+  font-size: 21px;
+  color: var(--bleu);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.auth-boite h2 {
+  font-size: 15px;
+  color: var(--texte-leger);
+  text-align: center;
+  font-weight: normal;
+  margin-bottom: 22px;
+  border: none;
+  padding: 0;
+}
+
+.auth-lien {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--texte-leger);
+}
+
+.auth-lien a { color: var(--bleu); text-decoration: none; }
+.auth-lien a:hover { text-decoration: underline; }
+
+.msg-erreur {
+  background: rgba(248, 113, 113, 0.1);
+  color: var(--rouge);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: var(--rayon);
+  padding: 9px 13px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.msg-succes {
+  background: rgba(74, 222, 128, 0.1);
+  color: var(--vert);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: var(--rayon);
+  padding: 9px 13px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+
+/* ----------------------------------------------------------------
+   LIEN "Voir tout →" sur l'accueil
+---------------------------------------------------------------- */
+main p a {
+  color: var(--bleu);
+  text-decoration: none;
+}
+
+main p a:hover {
+  text-decoration: underline;
+}
