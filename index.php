@@ -4,8 +4,7 @@ require_once 'auth.php';
 require_once 'config/connexionBD.php';
 require_once 'nav.php';
 
-$uid        = $_SESSION['user_id'];
-$aujourdhui = date('Y-m-d');
+$uid = $_SESSION['user_id'];
 
 // --- Les 3 dernières fiches ---
 $req_fiches = $pdo->prepare('
@@ -30,18 +29,6 @@ $req_cours = $pdo->prepare('
 ');
 $req_cours->execute([$uid]);
 $derniers_cours = $req_cours->fetchAll();
-
-// --- Les 3 prochains créneaux ---
-$req_edt = $pdo->prepare('
-    SELECT e.id, e.jour, e.date_creneau, e.heure, e.description, m.nom AS matiere_nom
-    FROM emploi_du_temps e
-    LEFT JOIN matieres m ON m.id = e.matiere_id
-    WHERE e.user_id = ? AND e.date_creneau >= ?
-    ORDER BY e.date_creneau ASC, e.heure ASC
-    LIMIT 3
-');
-$req_edt->execute([$uid, $aujourdhui]);
-$prochains_creneaux = $req_edt->fetchAll();
 
 // --- Compteurs ---
 $req1 = $pdo->prepare('SELECT COUNT(*) FROM fiches WHERE user_id = ?');
@@ -130,26 +117,6 @@ $nb_matieres = $req3->fetchColumn();
       </div>
     <?php endforeach; ?>
     <p><a href="cours.php">Voir tous mes cours →</a></p>
-  <?php endif; ?>
-
-  <!-- Prochains créneaux -->
-  <h2>🗓️ Prochains créneaux</h2>
-
-  <?php if (empty($prochains_creneaux)): ?>
-    <p>Aucun créneau prévu. <a href="emploi_du_temps.php">Planifier une révision →</a></p>
-  <?php else: ?>
-    <?php foreach ($prochains_creneaux as $creneau): ?>
-      <div class="card">
-        <h3><?= htmlspecialchars($creneau['matiere_nom'] ?? 'Sans matière') ?></h3>
-        <p><strong>Jour :</strong> <?= htmlspecialchars($creneau['jour']) ?> — <?= date('d/m/Y', strtotime($creneau['date_creneau'])) ?></p>
-        <p><strong>Heure :</strong> <?= substr($creneau['heure'], 0, 5) ?></p>
-
-        <?php if ($creneau['description'] != ''): ?>
-          <p><strong>Description :</strong> <?= htmlspecialchars($creneau['description']) ?></p>
-        <?php endif; ?>
-      </div>
-    <?php endforeach; ?>
-    <p><a href="emploi_du_temps.php">Voir mon emploi du temps →</a></p>
   <?php endif; ?>
 
 </main>

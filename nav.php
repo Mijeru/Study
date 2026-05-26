@@ -9,7 +9,6 @@
     <a href="fiches.php">Fiches</a>
     <a href="cours.php">Cours</a>
     <a href="matieres.php">Matières</a>
-    <a href="emploi_du_temps.php">Emploi du temps</a>
   </nav>
   <div class="nav-user">
     <span>👤 <?= htmlspecialchars($_SESSION['user_nom']) ?></span>

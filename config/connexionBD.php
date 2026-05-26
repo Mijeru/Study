@@ -22,7 +22,6 @@ try {
     // charset=utf8 : pour que les accents fonctionnent correctement
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
 
-    // ERRMODE_EXCEPTION : si une requête SQL échoue, PHP lance une erreur claire (au lieu de rien faire)
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     // On n'affiche pas le vrai message d'erreur pour ne pas exposer les détails de la BD

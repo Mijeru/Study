@@ -306,7 +306,7 @@ form a:hover { opacity: 0.75; }
 
 
 /* ----------------------------------------------------------------
-   GRILLE EMPLOI DU TEMPS — emploi_du_temps.php
+   GRILLE RÉVISION — tableau de bord éventuel
 ---------------------------------------------------------------- */
 .grille-wrapper {
   overflow-x: auto;
@@ -360,7 +360,7 @@ form a:hover { opacity: 0.75; }
 
 
 /* ----------------------------------------------------------------
-   POPUP — emploi_du_temps.php
+   POPUP — modal de détail générique
 ---------------------------------------------------------------- */
 .popup-overlay {
   display: none;

@@ -38,7 +38,7 @@ $req_matieres = $pdo->prepare('SELECT * FROM matieres WHERE user_id = ? ORDER BY
 $req_matieres->execute([$uid]);
 $matieresList = $req_matieres->fetchAll();
 
-// --- Récupérer les fiches favorites ---
+// --- Récupérer les fiches favorites --- 
 $req_favoris = $pdo->prepare('
     SELECT f.*, m.nom AS matiere_nom
     FROM fiches f

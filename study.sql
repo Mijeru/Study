@@ -1,6 +1,6 @@
 -- ================================================================
 -- study.sql — Base de données simplifiée (sans tags, sans fiches_cours)
--- Tables : utilisateurs, matieres, fiches, cours, emploi_du_temps
+-- Tables : utilisateurs, matieres, fiches, cours
 -- ================================================================
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -27,7 +27,7 @@ CREATE TABLE `utilisateurs` (
 
 -- ================================================================
 -- TABLE : matieres
--- Les matières sont utilisées dans les fiches, cours et emploi du temps.
+-- Les matières sont utilisées dans les fiches et cours.
 -- Relation : un utilisateur peut avoir plusieurs matières.
 -- ON DELETE SET NULL dans fiches/cours : si on supprime une matière,
 --   les fiches et cours ne sont pas supprimés, juste matiere_id = NULL
@@ -99,33 +99,6 @@ CREATE TABLE `cours` (
     ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ================================================================
--- TABLE : emploi_du_temps
--- Créneaux de révision de l'utilisateur.
--- matiere_id peut être NULL si aucune matière choisie.
--- ================================================================
-DROP TABLE IF EXISTS `emploi_du_temps`;
-CREATE TABLE `emploi_du_temps` (
-  `id`            INT          NOT NULL AUTO_INCREMENT,
-  `user_id`       INT          NOT NULL,           -- Clé étrangère → utilisateurs.id
-  `matiere_id`    INT          DEFAULT NULL,        -- Clé étrangère → matieres.id (optionnel)
-  `jour`          VARCHAR(20)  NOT NULL,            -- ex: "Lundi"
-  `date_creneau`  DATE         NOT NULL,            -- ex: 2026-04-22
-  `heure`         TIME         NOT NULL,            -- ex: 09:00:00
-  `description`   TEXT,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_emploi_user`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `utilisateurs`(`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_emploi_matiere`
-    FOREIGN KEY (`matiere_id`)
-    REFERENCES `matieres`(`id`)
-    ON DELETE SET NULL                             -- Si matière supprimée, le créneau reste mais matiere_id = NULL
-    ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 SET FOREIGN_KEY_CHECKS = 1; -- On réactive les vérifications
 
 -- ================================================================
@@ -134,8 +107,6 @@ SET FOREIGN_KEY_CHECKS = 1; -- On réactive les vérifications
 --  utilisateurs ──(1,N)── matieres
 --  utilisateurs ──(1,N)── fiches
 --  utilisateurs ──(1,N)── cours
---  utilisateurs ──(0,N)── emploi_du_temps
 --  matieres     ──(0,N)── fiches         (SET NULL si supprimée)
 --  matieres     ──(0,N)── cours          (SET NULL si supprimée)
---  matieres     ──(0,N)── emploi_du_temps(SET NULL si supprimée)
 -- ================================================================

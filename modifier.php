@@ -1,6 +1,6 @@
 <?php
-// modifier.php — Modifier une fiche, un cours ou un créneau
-// URL attendue : modifier.php?type=fiche&id=X  ou  type=cours  ou  type=emploi
+// modifier.php — Modifier une fiche ou un cours
+// URL attendue : modifier.php?type=fiche&id=X  ou  type=cours&id=X
 require_once 'auth.php';
 require_once 'config/connexionBD.php';
 require_once 'nav.php';
@@ -10,7 +10,7 @@ $type = $_GET['type'] ?? '';
 $id   = $_GET['id']   ?? 0;
 
 // On vérifie que les paramètres sont valides
-if (!in_array($type, ['fiche', 'cours', 'emploi']) || !$id) {
+if (!in_array($type, ['fiche', 'cours']) || !$id) {
     die('Paramètres invalides.');
 }
 
@@ -32,13 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: cours.php');
         exit;
     }
-
-    if ($type === 'emploi') {
-        $req = $pdo->prepare('UPDATE emploi_du_temps SET jour = ?, date_creneau = ?, heure = ?, matiere_id = ?, description = ? WHERE id = ? AND user_id = ?');
-        $req->execute([$_POST['jour'], $_POST['date_creneau'], $_POST['heure'], $matiere_id, $_POST['description'], $id, $uid]);
-        header('Location: emploi_du_temps.php');
-        exit;
-    }
 }
 
 // --- Charger l'élément à modifier ---
@@ -46,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $tables = [
     'fiche'  => 'fiches',
     'cours'  => 'cours',
-    'emploi' => 'emploi_du_temps'
 ];
 
 $req = $pdo->prepare('SELECT * FROM ' . $tables[$type] . ' WHERE id = ? AND user_id = ?');
@@ -62,8 +54,6 @@ if (!$item) {
 $req_matieres = $pdo->prepare('SELECT * FROM matieres WHERE user_id = ? ORDER BY nom');
 $req_matieres->execute([$uid]);
 $matieresList = $req_matieres->fetchAll();
-
-$jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -122,35 +112,6 @@ $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche
 
     <button type="submit">Enregistrer</button>
     <a href="cours.php">Annuler</a>
-  </form>
-  <?php endif; ?>
-
-  <!-- Formulaire emploi du temps -->
-  <?php if ($type === 'emploi'): ?>
-  <h2>Modifier le créneau</h2>
-  <form method="POST">
-    <select name="jour" required>
-      <?php foreach ($jours as $j): ?>
-        <option value="<?= $j ?>" <?= $item['jour'] === $j ? 'selected' : '' ?>><?= $j ?></option>
-      <?php endforeach; ?>
-    </select>
-
-    <input type="date" name="date_creneau" value="<?= htmlspecialchars($item['date_creneau']) ?>" required>
-    <input type="time" name="heure" value="<?= htmlspecialchars($item['heure']) ?>" required>
-
-    <select name="matiere_id">
-      <option value="">-- Choisir une matière --</option>
-      <?php foreach ($matieresList as $m): ?>
-        <option value="<?= $m['id'] ?>" <?= $item['matiere_id'] == $m['id'] ? 'selected' : '' ?>>
-          <?= htmlspecialchars($m['nom']) ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
-
-    <input type="text" name="description" value="<?= htmlspecialchars($item['description'] ?? '') ?>">
-
-    <button type="submit">Enregistrer</button>
-    <a href="emploi_du_temps.php">Annuler</a>
   </form>
   <?php endif; ?>
 
